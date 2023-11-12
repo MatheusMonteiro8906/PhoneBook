@@ -1,15 +1,17 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Param, NotFoundException, Res, HttpCode } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
+    @HttpCode(200)
     @Get()
     findAll() {
         return this.userService.findAll();
     }
 
+    @HttpCode(200)
     @Get(':id/phone_numbers')
     async findOne(@Param('id') id: string) {
         try {

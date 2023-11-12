@@ -3,22 +3,25 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-    await prisma.user.create({
-        data: {
-            name: 'Nome do Usuário página 2',
-            phones: {
-                create: [
-                    { number: '12345678922' },
-                    { number: '98765432122' },
-                ],
+
+    for (let i = 1; i <= 16; i++) {
+        await prisma.user.create({
+            data: {
+                name: `usuário ${i}`,
+                phones: {
+                    create: [
+                        { number: `12345678922${i}` },
+                        { number: `98765432122${i}` },
+                    ],
+                },
             },
-        },
-    });
+        });
+    }
 }
 
 main()
-    .catch((e) => {
-        throw e;
+    .catch((error) => {
+        throw error;
     })
     .finally(async () => {
         await prisma.$disconnect();
