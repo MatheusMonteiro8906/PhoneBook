@@ -13,7 +13,7 @@ export class UserController {
 
     @HttpCode(200)
     @Get(':id/phone_numbers')
-    async findOne(@Param('id') id: string) {
+    async findOne(@Param('id') id: string, @Res() response) {
         try {
             const user = await this.userService.findOne(+id);
 
@@ -24,14 +24,13 @@ export class UserController {
                     userId: phone.userId,
                 }));
 
-                return phoneNumbers;
+                return response.send(phoneNumbers);
             } else {
-                throw new NotFoundException(`User with id ${id} not found`);
+                return response.status(404).send(`User with id ${id} not found`);
             }
         } catch (error) {
-            throw new NotFoundException(`Error retrieving user with id ${id}`);
+            return response.status(400).send(`Error retrieving user with id ${id}`);
         }
-
     }
     // @Post()
     // create(@Body() data: { nome: string }) {

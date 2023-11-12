@@ -2,7 +2,7 @@ export default {
     async getAllUsers() {
         try {
 
-            const response = await fetch('http://localhost:3000/users',
+            const response = await fetch('http://localhost:8080/users',
                 {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json', }
@@ -22,7 +22,7 @@ export default {
 
     async getOneUser(id: number) {
         try {
-            const response = await fetch(`http://localhost:3000/users/${id}/phone_numbers`,
+            const response = await fetch(`http://localhost:8080/users/${id}/phone_numbers`,
                 {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json', }

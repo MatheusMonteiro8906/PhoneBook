@@ -10,8 +10,8 @@ async function main() {
                 name: `usuário ${i}`,
                 phones: {
                     create: [
-                        { number: `12345678922${i}` },
-                        { number: `98765432122${i}` },
+                        { number: `123456789223${i}` },
+                        { number: `987654321227${i}` },
                     ],
                 },
             },
