@@ -43,10 +43,10 @@ export default function ListaTelefonica() {
     setPage(0);
   };
 
+
   function handleClick(id: number) {
     setOpen(true);
     router.push(`/?${id}`);
-
     userService.getOneUser(id).then((res: userPhones[]) => {
       const updatedPhoneRows: userPhones[] = [];
 
@@ -152,7 +152,8 @@ export default function ListaTelefonica() {
           </Typography>
           <List>
             {phones.map((phone) => {
-              const formattedNumber = `+(${phone.number.slice(0, 2)}) ${phone.number.slice(2, 4)} ${phone.number.slice(4, 9)}-${phone.number.slice(9)}`;
+
+              const formattedNumber = `(${phone.number.slice(2, 4)}) ${phone.number.slice(4, 9)}-${phone.number.slice(9)}`;
 
               return (
                 <ListItem disablePadding key={phone.id}>
