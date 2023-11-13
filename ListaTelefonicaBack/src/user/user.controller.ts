@@ -16,8 +16,19 @@ export class UserController {
     @Get()
     async findAll() {
         const users: User[] = await this.userService.findAll();
-
         const usersDto: UserDto[] = users.map(UserDto.getUserDto);
+
+        return usersDto;
+    }
+
+    @HttpCode(200)
+    @ApiOperation({ summary: 'Lista 5 usuários', description: 'Endpoint para obter uma lista de 5 usuários por vez.' })
+    @Get('teste/:page')
+    async findSome(@Param('page') page: string) {
+
+        const users: User[] = await this.userService.findSome(+page);
+        const usersDto: UserDto[] = users.map(UserDto.getUserDto);
+
         return usersDto;
     }
 

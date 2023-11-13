@@ -7,7 +7,7 @@ export class ApiKeyMiddleware implements NestMiddleware {
         const apiKey = req.headers['api-key'];
 
         if (apiKey !== 'MeAprova') {
-            return res.status(401).json({ message: 'API KEY inválida' });
+            return res.status(401).json({ message: 'ApiKey inválida' });
         }
 
         next();

@@ -5,7 +5,10 @@ export default {
             const response = await fetch(`${process.env.API_URL}users`,
                 {
                     method: 'GET',
-                    headers: { 'Content-Type': 'application/json', }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'api-key': `${process.env.API_KEY}`
+                    }
                 });
 
             if (!response.ok) {
@@ -25,7 +28,10 @@ export default {
             const response = await fetch(`${process.env.API_URL}users/${id}/phone_numbers`,
                 {
                     method: 'GET',
-                    headers: { 'Content-Type': 'application/json', }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'api-key': `${process.env.API_KEY}`
+                    }
                 });
 
             if (!response.ok) {

@@ -15,5 +15,13 @@ export class UserService {
         return this.prisma.user.findUnique({ where: { id }, include: { phones: true } });
     }
 
+    async findSome(page: number = 0) {
+        return this.prisma.user.findMany({
+            skip: page,
+            take: 5,
+            include: { phones: true }
+        });
+    }
+
 
 }
