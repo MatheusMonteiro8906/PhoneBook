@@ -20,13 +20,16 @@ export class UserController {
             if (page) {
                 const users: User[] = await this.userService.getPaginatedUsers(+page);
                 const usersDto: UserDto[] = users.map(UserDto.getUserDto);
+                const totalUsers = await this.userService.getTotalUsers();
+
                 if (usersDto.length >= 1)
-                    return response.send(usersDto);
+                    return response.send({ users: usersDto, totalUsers: totalUsers });
 
                 return response.status(204).send("No more user data to fetch");
             } else {
                 const users: User[] = await this.userService.getAllUsers();
                 const usersDto: UserDto[] = users.map(UserDto.getUserDto);
+
                 if (usersDto.length >= 1)
                     return response.send(usersDto);
 

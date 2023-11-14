@@ -28,19 +28,20 @@ interface userPhones {
 export default function ListaTelefonica() {
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
-    const [MaxPage, setMaxPage] = useState(0);
+    const [totalUsers, setTotalUsers] = useState(0);
     const [rows, setRows] = useState<userData[]>([]);
     const [phones, setPhones] = useState<userPhones[]>([]);
     const router = useRouter();
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        if (!MaxPage || newPage <= MaxPage) {
+        if (!totalUsers || newPage <= totalUsers) {
             setPage(newPage);
         }
     };
 
+    const handleClose = () => setOpen(false);
 
-    function handleClick(id: number) {
+    const handleClick = (id: number) => {
         setOpen(true);
         getOneUser(id).then((res: userPhones[]) => {
             const updatedPhoneRows: userPhones[] = [];
@@ -64,25 +65,19 @@ export default function ListaTelefonica() {
         getAllUsers(page).then((res) => {
             const updatedRows: userData[] = [];
 
-            res.forEach((user: { name: string; id: number }) => {
+            res.users.forEach((user: { name: string; id: number }) => {
 
                 const processedUser: userData = {
                     name: user.name,
                     id: user.id,
                 };
-
+                setTotalUsers(res.totalUsers)
                 updatedRows.push(processedUser);
             });
-
-            if (updatedRows.length < 5) {
-                setMaxPage(page);
-            }
 
             setRows(updatedRows);
         });
     }, [page]);
-
-    const handleClose = () => setOpen(false);
 
     return (
         <main style={{ display: "flex", justifyContent: "center", width: "20rem", margin: "auto", marginTop: "20vh" }}>
@@ -119,7 +114,7 @@ export default function ListaTelefonica() {
                     labelDisplayedRows={() => ''}
                     rowsPerPageOptions={[5]}
                     component="div"
-                    count={Number.MAX_SAFE_INTEGER}
+                    count={totalUsers}
                     rowsPerPage={5}
                     page={page}
                     onPageChange={handleChangePage}

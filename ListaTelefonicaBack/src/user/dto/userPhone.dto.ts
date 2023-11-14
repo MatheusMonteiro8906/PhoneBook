@@ -8,6 +8,7 @@ export class UserPhoneNumberDto {
         const userPhoneNumberDto = new UserPhoneNumberDto();
         userPhoneNumberDto.number = user.number;
         userPhoneNumberDto.id = user.id;
+
         return userPhoneNumberDto;
     }
 

@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { IsNumber, IsString, isNumber } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 
 export class UserDto {
     @IsNumber()
@@ -11,6 +11,7 @@ export class UserDto {
         const userDto = new UserDto();
         userDto.name = user.name;
         userDto.id = user.id;
+
         return userDto;
     }
 }
