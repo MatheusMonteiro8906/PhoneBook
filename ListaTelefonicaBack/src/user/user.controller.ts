@@ -15,13 +15,13 @@ export class UserController {
     @ApiOperation({ summary: 'Lista todos os usuários', description: 'Endpoint para obter uma lista de todos os usuários, ou, uma paginação de 5 usuários por vez' })
     @ApiQuery({ required: false, type: "string", name: "page" })
     @Get()
-    async findSome(@Query('page') page?: string) {
+    async getUsers(@Query('page') page?: string) {
         if (page) {
             const users: User[] = await this.userService.getPaginatedUsers(+page);
             const usersDto: UserDto[] = users.map(UserDto.getUserDto);
             return usersDto;
         } else {
-            const users: User[] = await this.userService.findAll();
+            const users: User[] = await this.userService.getAllUsers();
             const usersDto: UserDto[] = users.map(UserDto.getUserDto);
             return usersDto;
         }
@@ -30,10 +30,9 @@ export class UserController {
     @HttpCode(200)
     @ApiOperation({ summary: 'Lista todos os números relacionados ao usuário', description: 'Endpoint para obter uma lista de todos os números referentes ao usuário.' })
     @Get(':id/phone_numbers')
-    async findOne(@Param('id') id: string, @Res() response) {
+    async getUserPhoneNumbers(@Param('id') id: string, @Res() response) {
         try {
-            const user = await this.userService.findOne(+id);
-
+            const user = await this.userService.getOneUser(+id);
             if (user) {
                 const phoneNumbers = user.phones.map(UserPhoneNumberDto.getUserPhones);
                 return response.send(phoneNumbers);
