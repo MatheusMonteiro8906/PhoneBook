@@ -8,10 +8,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Box, Button, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Modal, Typography } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Modal, Typography } from '@mui/material';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { useRouter } from 'next/navigation';
-import userService from '@/services/userServices';
+import { getAllUsers, getOneUser } from '@/services/userServices';
 import { useEffect, useState } from 'react';
 
 interface userData {
@@ -26,28 +26,23 @@ interface userPhones {
 }
 
 export default function ListaTelefonica() {
-    const [open, setOpen] = React.useState(false);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [open, setOpen] = useState(false);
+    const [page, setPage] = useState(0);
+    const [MaxPage, setMaxPage] = useState(0);
     const [rows, setRows] = useState<userData[]>([]);
     const [phones, setPhones] = useState<userPhones[]>([]);
-
     const router = useRouter();
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
+        if (!MaxPage || newPage <= MaxPage) {
+            setPage(newPage);
+        }
     };
 
 
     function handleClick(id: number) {
         setOpen(true);
-        router.push(`/?${id}`);
-        userService.getOneUser(id).then((res: userPhones[]) => {
+        getOneUser(id).then((res: userPhones[]) => {
             const updatedPhoneRows: userPhones[] = [];
 
             res.forEach((userPhones: userPhones) => {
@@ -65,7 +60,8 @@ export default function ListaTelefonica() {
     }
 
     useEffect(() => {
-        userService.getAllUsers().then((res) => {
+        router.push(`/?${page}`);
+        getAllUsers(page).then((res) => {
             const updatedRows: userData[] = [];
 
             res.forEach((user: { name: string; id: number }) => {
@@ -78,9 +74,13 @@ export default function ListaTelefonica() {
                 updatedRows.push(processedUser);
             });
 
+            if (updatedRows.length < 5) {
+                setMaxPage(page);
+            }
+
             setRows(updatedRows);
         });
-    }, []);
+    }, [page]);
 
     const handleClose = () => setOpen(false);
 
@@ -102,7 +102,6 @@ export default function ListaTelefonica() {
                         </TableHead>
                         <TableBody>
                             {rows
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row) => {
                                     return (
                                         <TableRow hover role="checkbox" onClick={() => handleClick(row.id)} tabIndex={-1} key={row.id} sx={{ cursor: "pointer" }}>
@@ -117,14 +116,13 @@ export default function ListaTelefonica() {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+                    labelDisplayedRows={() => ''}
                     rowsPerPageOptions={[5]}
                     component="div"
-                    count={rows.length}
+                    count={Number.MAX_SAFE_INTEGER}
                     rowsPerPage={5}
                     page={page}
                     onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
 
@@ -152,8 +150,7 @@ export default function ListaTelefonica() {
                     </Typography>
                     <List>
                         {phones.map((phone) => {
-
-                            const formattedNumber = `(${phone.number.slice(2, 4)}) ${phone.number.slice(4, 9)}-${phone.number.slice(9)}`;
+                            const formattedNumber = phone.number.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
 
                             return (
                                 <ListItem disablePadding key={phone.id}>

@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
-import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -16,11 +14,19 @@ export class UserService {
     }
 
     async findSome(page: number = 0) {
-        return this.prisma.user.findMany({
-            skip: page,
+        const pageSize = 5;
+
+        const totalUsers = await this.prisma.user.count();
+        const totalPages = Math.ceil(totalUsers / pageSize);
+        const validPage = Math.min(page, totalPages - 1);
+
+        const users = this.prisma.user.findMany({
+            skip: validPage * pageSize,
             take: 5,
-            include: { phones: true }
+            include: { phones: true } //Eu poderia remover os includes de phones de todos os métodos, mas, por motivos de demonstração do DTO, eu mantive
         });
+
+        return users;
     }
 
 

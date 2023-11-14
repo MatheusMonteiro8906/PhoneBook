@@ -1,10 +1,9 @@
-import { Controller, Get, Param, NotFoundException, Res, HttpCode } from '@nestjs/common';
+import { Controller, Get, Param, Res, HttpCode } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto';
-import { plainToInstance } from 'class-transformer';
 import { User } from '@prisma/client';
 import { UserPhoneNumberDto } from './dto/userPhone.dto';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
 @ApiTags('usuários')
@@ -12,24 +11,18 @@ export class UserController {
     constructor(private readonly userService: UserService) { }
 
     @HttpCode(200)
-    @ApiOperation({ summary: 'Lista todos os usuários', description: 'Endpoint para obter uma lista de todos os usuários.' })
-    @Get()
-    async findAll() {
-        const users: User[] = await this.userService.findAll();
-        const usersDto: UserDto[] = users.map(UserDto.getUserDto);
-
-        return usersDto;
-    }
-
-    @HttpCode(200)
-    @ApiOperation({ summary: 'Lista 5 usuários', description: 'Endpoint para obter uma lista de 5 usuários por vez.' })
-    @Get('teste/:page')
-    async findSome(@Param('page') page: string) {
-
-        const users: User[] = await this.userService.findSome(+page);
-        const usersDto: UserDto[] = users.map(UserDto.getUserDto);
-
-        return usersDto;
+    @ApiOperation({ summary: 'Lista todos os usuários', description: 'Endpoint para obter uma lista de todos os usuários, ou, uma paginação de 5 usuários por vez' })
+    @Get(':page?')
+    async findSome(@Param('page') page?: string) {
+        if (page) {
+            const users: User[] = await this.userService.findSome(+page);
+            const usersDto: UserDto[] = users.map(UserDto.getUserDto);
+            return usersDto;
+        } else {
+            const users: User[] = await this.userService.findAll();
+            const usersDto: UserDto[] = users.map(UserDto.getUserDto);
+            return usersDto;
+        }
     }
 
     @HttpCode(200)
@@ -49,9 +42,4 @@ export class UserController {
             return response.status(422).send(`Error retrieving user with id ${id}`);
         }
     }
-    // @Post()
-    // create(@Body() data: { nome: string }) {
-    //     return this.userService.create(data);
-    // }
-
 }
