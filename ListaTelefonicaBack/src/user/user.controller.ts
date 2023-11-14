@@ -3,8 +3,9 @@ import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto';
 import { User } from '@prisma/client';
 import { UserPhoneNumberDto } from './dto/userPhone.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiBasicAuth()
 @Controller('users')
 @ApiTags('usuários')
 export class UserController {

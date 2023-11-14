@@ -10,6 +10,11 @@ async function bootstrap() {
     .setTitle('Lista telefonica')
     .setDescription('Swagger para testes de apiRestful para uma lista telefonica')
     .setVersion('1.0')
+    .addBasicAuth({
+      type: 'apiKey',
+      name: 'api-key',
+      in: 'header',
+    })
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
