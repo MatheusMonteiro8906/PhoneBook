@@ -2,13 +2,13 @@
 
 ## Getting Started
 
-Abra um terminal na pasta `ListaTelefonicaFrontend` e insira os seguintes comandos:
+Abra um terminal na pasta `ListaTelefonicaFrontend` e insira os seguintes comandos na respectiva ordem:
 
 ```bash
 npm install
-# agora
+# 
 npm run build
-# e por fim
+# 
 npm run start
 ```
 
