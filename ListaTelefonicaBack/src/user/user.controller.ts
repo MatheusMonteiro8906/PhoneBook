@@ -15,15 +15,25 @@ export class UserController {
     @ApiOperation({ summary: 'Lista todos os usuários', description: 'Endpoint para obter uma lista de todos os usuários, ou, uma paginação de 5 usuários por vez' })
     @ApiQuery({ required: false, type: "string", name: "page" })
     @Get()
-    async getUsers(@Query('page') page?: string) {
-        if (page) {
-            const users: User[] = await this.userService.getPaginatedUsers(+page);
-            const usersDto: UserDto[] = users.map(UserDto.getUserDto);
-            return usersDto;
-        } else {
-            const users: User[] = await this.userService.getAllUsers();
-            const usersDto: UserDto[] = users.map(UserDto.getUserDto);
-            return usersDto;
+    async getUsers(@Res() response, @Query('page') page?: string) {
+        try {
+            if (page) {
+                const users: User[] = await this.userService.getPaginatedUsers(+page);
+                const usersDto: UserDto[] = users.map(UserDto.getUserDto);
+                if (usersDto.length >= 1)
+                    return response.send(usersDto);
+
+                return response.status(204).send("No more user data to fetch");
+            } else {
+                const users: User[] = await this.userService.getAllUsers();
+                const usersDto: UserDto[] = users.map(UserDto.getUserDto);
+                if (usersDto.length >= 1)
+                    return response.send(usersDto);
+
+                return response.status(204).send("No user data to fetch");
+            }
+        } catch (error) {
+            return response.status(422).send(`Error retrieving data`);
         }
     }
 

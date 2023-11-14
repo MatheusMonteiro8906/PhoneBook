@@ -65,7 +65,7 @@ describe('UserController', () => {
         },
       ]; jest.spyOn(userService, 'getAllUsers').mockResolvedValue(usersMock);
 
-      const result = await controller.getUsers();
+      const result = await controller.getUsers(Response);
 
       expect(result).toEqual(usersMock);
     });
