@@ -1,9 +1,9 @@
-import { Controller, Get, Param, Res, HttpCode } from '@nestjs/common';
+import { Controller, Get, Param, Res, HttpCode, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto';
 import { User } from '@prisma/client';
 import { UserPhoneNumberDto } from './dto/userPhone.dto';
-import { ApiBasicAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @ApiBasicAuth()
 @Controller('users')
@@ -13,10 +13,11 @@ export class UserController {
 
     @HttpCode(200)
     @ApiOperation({ summary: 'Lista todos os usuários', description: 'Endpoint para obter uma lista de todos os usuários, ou, uma paginação de 5 usuários por vez' })
-    @Get(':page?')
-    async findSome(@Param('page') page?: string) {
+    @ApiQuery({ required: false, type: "string", name: "page" })
+    @Get()
+    async findSome(@Query('page') page?: string) {
         if (page) {
-            const users: User[] = await this.userService.findSome(+page);
+            const users: User[] = await this.userService.getPaginatedUsers(+page);
             const usersDto: UserDto[] = users.map(UserDto.getUserDto);
             return usersDto;
         } else {

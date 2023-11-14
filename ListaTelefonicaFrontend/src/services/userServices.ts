@@ -1,7 +1,7 @@
 
 const getAllUsers = async (pageNumber: number) => {
     try {
-        const response = await fetch(`${process.env.API_URL}users/${+pageNumber}`,
+        const response = await fetch(`${process.env.API_URL}users?page=${+pageNumber}`,
             {
                 method: 'GET',
                 headers: {
@@ -9,7 +9,6 @@ const getAllUsers = async (pageNumber: number) => {
                     'api-key': `${process.env.API_KEY}`
                 }
             });
-
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
