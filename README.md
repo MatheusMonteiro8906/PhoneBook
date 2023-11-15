@@ -3,7 +3,7 @@
 
 ## Project Dependencies
 
-### Frontend
+### Frontend:
 
 #### 1. [@emotion/react](https://www.npmjs.com/package/@emotion/react) (^11.11.1)
 
@@ -50,7 +50,7 @@
 - **Description**: DOM bindings for React Router, facilitating navigation in a React application.
 - **Version**: 6.18.0
 
-### Backend
+### Backend:
 
 #### 1. [@nestjs/common](https://www.npmjs.com/package/@nestjs/common) (^10.0.0)
 
@@ -144,11 +144,10 @@ You should be able to browse different components of the application by using th
 
 ```
 Frontend application : http://localhost:3000/
-Backend application :  (http://localhost:8080/api/
+Backend application :  http://localhost:8080/api/
 ```
 
 ## Api routes
-
 
 | Route                                                    | Params | Queries | Default response |
 |-----------------------------------------------------------------|:-----:|:------:|:-------------------------------------------------------------------------------:|
@@ -159,5 +158,3 @@ Backend application :  (http://localhost:8080/api/
 
 ## Requirements
 * Docker Desktop
-
-             
