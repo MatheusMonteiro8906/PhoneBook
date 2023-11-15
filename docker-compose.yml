@@ -1,0 +1,13 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./phoneBookFrontend
+    ports:
+      - "3000:3000"
+
+  backend:
+    build:
+      context: ./phoneBookBackend
+    ports:
+      - "8080:8080"
