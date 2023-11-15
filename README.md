@@ -40,12 +40,16 @@ Make sure you have [installed](https://nodejs.org/en/download) NodeJs in your ma
 
 on the ``phoneBookBackend`` folder, you will need to run:
 ```powershell
+npm install
+#
 npm run build
 #
 npm run start:prod
 ```
 Now that we have the api running, we need to start our frontend, on the ``phoneBookFrontend`` folder, you will need to run:
 ```powershell
+npm install
+#
 npm run build
 #
 npm run start
