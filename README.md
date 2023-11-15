@@ -2,7 +2,7 @@
 5 days challenge to build a scalable ApiRest using NestJs for backend with NextJs for frontend 
 
 ## Project overview
-- [Dependencies](#dependencies)
+- [Dependencies](#project-dependencies)
 - [Docker Installation](#docker-method)
 - [Local Installation](#local-method)
 - [Application access](#application-access)
