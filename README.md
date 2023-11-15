@@ -1,5 +1,5 @@
-# NestJs API with NextJs  
-5 days challenge to build a scalable ApiRest using NestJs for backend with NextJs for frontend 
+# NestJs API with NextJs and Prisma
+5 days challenge to build a scalable ApiRest using NestJs for backend with NextJs for frontend and Prisma ORM for database management
 
 ## Project overview
 - [Dependencies](#project-dependencies)
@@ -8,8 +8,6 @@
 - [Application access](#application-access)
 - [Api routes](#api-routes)
 - [Requirements](#requirements)
-
-
 
 ## Project Dependencies
 
@@ -28,7 +26,6 @@
 - **Description**: Prisma client for interacting with databases.
 - **Version**: 5.5.2
 
-
 ## Installation
 
 ### Docker method
@@ -42,17 +39,17 @@ docker-compose up --build
 Make sure you have [installed](https://nodejs.org/en/download) NodeJs in your machine. After that, you can run the below commands to get started with the `PhoneBook` immediately.
 
 on the ``phoneBookBackend`` folder, you will need to run:
-````
+```powershell
 npm run build
 #
 npm run start:prod
-````
+```
 Now that we have the api running, we need to start our frontend, on the ``phoneBookFrontend`` folder, you will need to run:
-````
+```powershell
 npm run build
 #
 npm run start
-````
+```
 
 ## application access
 
