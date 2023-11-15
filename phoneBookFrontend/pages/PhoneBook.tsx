@@ -13,22 +13,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { useRouter } from 'next/navigation';
 import { getAllUsers, getOneUser } from '@/services/userServices';
 import { useEffect, useState } from 'react';
-
-interface userData {
-    name: string;
-    id: number;
-}
-
-interface userPhones {
-    id: number;
-    number: string;
-    userId: number;
-}
-
-interface GetUserResponse {
-    totalUsers: number;
-    users: [];
-}
+import { GetUserResponse, userData, userPhones } from '@/entities/userEntities';
 
 export default function PhoneBook() {
     const [open, setOpen] = useState(false);
