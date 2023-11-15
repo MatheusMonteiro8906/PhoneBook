@@ -2,7 +2,7 @@
 
 ## Getting Started 
 
-Abra um terminal na pasta `ListaTelefonicaBack` e insira os seguintes comandos na respectiva ordem:
+Open a terminal on folder `ListaTelefonicaBack` and insert the following commands on their respective order:
 
 ```bash
 npm install || yarn install
@@ -12,11 +12,11 @@ npm run build || yarn run build
 npm run start:prod || yarn run start:prod
 ```
 
-Abra [http://localhost:8080/api](http://localhost:8080/api) com o seu navegador e veja o resultado.
+Open [http://localhost:8080/api](http://localhost:8080/api) with your browser and see the result.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Abra um terminal na pasta `ListaTelefonicaFrontend` e insira os seguintes comandos na respectiva ordem:
+Open a terminal on folder `ListaTelefonicaFrontend` and insert the following commands on their respective order:
 
 ```bash
 npm install || yarn install
@@ -26,4 +26,4 @@ npm run build || yarn run build
 npm run start || yarn run start
 ```
 
-Abra [http://localhost:3000](http://localhost:3000) com o seu navegador e veja o resultado.
+Open [http://localhost:3000](http://localhost:3000) with your browser and see the result.

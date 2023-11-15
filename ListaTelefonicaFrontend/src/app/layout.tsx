@@ -9,8 +9,8 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-  title: 'Lista telefonica',
-  description: 'Desenvolvido por Matheus Monteiro',
+  title: 'Phone book',
+  description: 'Developed by Matheus Monteiro',
 }
 
 export default function RootLayout({

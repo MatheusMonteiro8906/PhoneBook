@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const options = new DocumentBuilder()
-    .setTitle('Lista telefonica')
-    .setDescription('Swagger para testes de apiRestful para uma lista telefonica')
+    .setTitle('Phone book')
+    .setDescription('ApiRestful Swagger for a phone book')
     .setVersion('1.0')
     .addBasicAuth({
       type: 'apiKey',

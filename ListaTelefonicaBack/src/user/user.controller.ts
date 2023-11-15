@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto';
 import { User } from '@prisma/client';
 import { UserPhoneNumberDto } from './dto/userPhone.dto';
-import { ApiBasicAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiBasicAuth()
 @Controller('users')
@@ -12,7 +12,11 @@ export class UserController {
     constructor(private readonly userService: UserService) { }
 
     @HttpCode(200)
-    @ApiOperation({ summary: 'Lista todos os usuários', description: 'Endpoint para obter uma lista de todos os usuários, ou, uma paginação de 5 usuários por vez' })
+    @ApiResponse({ status: 200, description: 'Users have been found successfully' })
+    @ApiResponse({ status: 204, description: 'There is no user to search' })
+    @ApiResponse({ status: 401, description: 'Api Key is incorrect' })
+    @ApiResponse({ status: 422, description: 'Impossible to search users' })
+    @ApiOperation({ summary: 'List all users', description: 'Endpoint to get a list of all users' })
     @ApiQuery({ required: false, type: "string", name: "page" })
     @Get()
     async getUsers(@Res() response, @Query('page') page?: string) {
@@ -26,7 +30,8 @@ export class UserController {
                     return response.send({ users: usersDto, totalUsers: totalUsers });
 
                 return response.status(204).send("No more user data to fetch");
-            } else {
+            }
+            else {
                 const users: User[] = await this.userService.getAllUsers();
                 const usersDto: UserDto[] = users.map(UserDto.getUserDto);
 
@@ -41,7 +46,11 @@ export class UserController {
     }
 
     @HttpCode(200)
-    @ApiOperation({ summary: 'Lista todos os números relacionados ao usuário', description: 'Endpoint para obter uma lista de todos os números referentes ao usuário.' })
+    @ApiResponse({ status: 200, description: 'Phone numbers succesfully found' })
+    @ApiResponse({ status: 401, description: 'Api Key is incorrect' })
+    @ApiResponse({ status: 404, description: 'Searched Phone numbers not found' })
+    @ApiResponse({ status: 422, description: 'Error searching phone numbers' })
+    @ApiOperation({ summary: 'List all phone numbers related to the user provided', description: 'Endpoint to obtain a list of all phone numbers referring to the user' })
     @Get(':id/phone_numbers')
     async getUserPhoneNumbers(@Param('id') id: string, @Res() response) {
         try {

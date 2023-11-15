@@ -17,19 +17,13 @@ export class UserService {
         return await this.prisma.user.count();
     }
 
-    public async getTotalPages(): Promise<number> {
-        const pageSize = 5;
-        const totalUsers = this.getTotalUsers();
-        return Math.ceil(await totalUsers / pageSize);
-    }
-
     public async getPaginatedUsers(page: number = 0) {
         const pageSize = 5;
 
         const users = this.prisma.user.findMany({
             skip: page * pageSize,
             take: pageSize,
-            include: { phones: true } // Eu poderia remover os includes de phones de todos os métodos, mas, por motivos de demonstração do DTO, eu mantive 
+            include: { phones: true } // I could remove the includes since i don't want to receive them on this request, but for demonstration reasons of DTO use, i left it here
         });
 
         return users;

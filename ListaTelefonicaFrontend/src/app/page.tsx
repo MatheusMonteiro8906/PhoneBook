@@ -1,11 +1,11 @@
 import * as React from 'react';
-import ListaTelefonica from '../../pages/ListaTelefonica';
+import PhoneBook from '../../pages/PhoneBook';
 
 export default function Home() {
 
   return (
     <>
-      <ListaTelefonica />
+      <PhoneBook />
     </>
   );
 }

@@ -25,7 +25,12 @@ interface userPhones {
     userId: number;
 }
 
-export default function ListaTelefonica() {
+interface GetUserResponse {
+    totalUsers: number;
+    users: [];
+}
+
+export default function PhoneBook() {
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [totalUsers, setTotalUsers] = useState(0);
@@ -61,8 +66,8 @@ export default function ListaTelefonica() {
     }
 
     useEffect(() => {
-        router.push(`/?${page}`);
-        getAllUsers(page).then((res) => {
+        router.push(`/?page=${page}`);
+        getAllUsers(page).then((res: GetUserResponse) => {
             const updatedRows: userData[] = [];
 
             res.users.forEach((user: { name: string; id: number }) => {
@@ -100,10 +105,9 @@ export default function ListaTelefonica() {
                                 .map((row) => {
                                     return (
                                         <TableRow hover role="checkbox" onClick={() => handleClick(row.id)} tabIndex={-1} key={row.id} sx={{ cursor: "pointer" }}>
-                                            <TableCell align={"center"}>
+                                            <TableCell align={"center"} sx={{ fontWeight: "500", fontSmooth: "auto", fontSize: "16px" }}>
                                                 {row.name}
                                             </TableCell>
-
                                         </TableRow>
                                     );
                                 })}
